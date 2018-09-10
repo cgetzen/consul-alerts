@@ -6,7 +6,7 @@ import (
 
 	"net/http"
 
-	"github.com/AcalephStorage/consul-alerts/consul"
+	"github.com/cgetzen/consul-alerts/consul"
 	"github.com/AcalephStorage/consul-alerts/notifier"
 
 	log "github.com/AcalephStorage/consul-alerts/Godeps/_workspace/src/github.com/Sirupsen/logrus"
@@ -123,7 +123,7 @@ func (c *CheckProcessor) handleChecks(checks []consul.Check) {
 func (c *CheckProcessor) notify(alerts []consul.Check) {
 	messages := make([]notifier.Message, len(alerts))
 	for i, alert := range alerts {
-		profileInfo := consulClient.GetProfileInfo(alert.Node, alert.ServiceID, alert.CheckID)
+		profileInfo := consulClient.GetProfileInfo(alert.Node, alert.ServiceID, alert.CheckID, alert.Status)
 		messages[i] = notifier.Message{
 			Node:         alert.Node,
 			ServiceId:    alert.ServiceID,
